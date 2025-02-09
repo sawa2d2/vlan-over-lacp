@@ -17,8 +17,8 @@ $ sudo curl -L -o /var/lib/libvirt/images/Rocky-9-GenericCloud.latest.x86_64.qco
 
 Provision VMs using terraform:
 ```
-$ terraform init --upgrade
-$ terraform apply --auto-approve
+$ sudo terraform init --upgrade
+$ sudo terraform apply --auto-approve
 ```
 
 ## Configuring bonds

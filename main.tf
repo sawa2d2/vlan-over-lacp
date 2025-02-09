@@ -20,12 +20,21 @@ resource "libvirt_cloudinit_disk" "commoninit" {
   pool = "default"
 }
 
+resource "local_file" "custom_emulator" {
+  count = 2
+  content = templatefile("${path.module}/emulator.sh.tpl", {
+    vm_index = count.index + 1
+  })
+  filename = "/var/lib/libvirt/images/emulator_vm${count.index + 1}.sh"
+}
+
 resource "libvirt_domain" "vm" {
-  count   = 2
-  name    = "vm${count.index + 1}"
-  vcpu    = 4
-  memory  = 4096
-  machine = "q35"
+  count    = 2
+  name     = "vm${count.index + 1}"
+  vcpu     = 4
+  memory   = 4096
+  machine  = "q35"
+  emulator = "/var/lib/libvirt/images/emulator_vm${count.index + 1}.sh"
 
   network_interface {
     bridge = "ovsbr0"
